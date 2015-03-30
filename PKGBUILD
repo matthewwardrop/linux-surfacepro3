@@ -71,7 +71,7 @@ prepare() {
   echo "WARNING: Enabling the multitouch patch will give you two finger scroll, but will \
     remove support for secondary (or right) click. Do you want to enable the multitouch path? (y/N) "
   read response
-  if [[ $response != 'y' && $response != 'Y' ]]; then
+  if [[ $response = 'y' && $response = 'Y' ]]; then
     patch -p1 -i "${srcdir}/multitouch.patch"
   fi
   
