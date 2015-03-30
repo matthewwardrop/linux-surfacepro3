@@ -37,7 +37,7 @@ sha256sums=('be42511fe5321012bb4a2009167ce56a9e5fe362b4af43e8c371b3666859806c'
             'a6c5c5dc3fa3e35e9eb762c36c4596f889df7c52be8d0533d697e47786fdef32'
             'e149dda8c92feca0fc9bbcbca0d0c3b749246b441ab9f7d34a0f68aeae76504c'
             'ec4bbf44dc1e226ccfdc33884e4a38b2209af0a576a8edcae9226b9ecb8fa27f'
-            'ab1ddd66c6665db5043669d7aaa61a10c664cf132ed34fbe763a2ef2b0d224b4'
+            'SKIP'
             )
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
