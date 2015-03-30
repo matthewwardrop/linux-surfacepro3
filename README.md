@@ -11,3 +11,19 @@ This AUR package adds the following patches to the official Linux kernel package
 
 
 * The multitouch patches add two-finger scroll support, but you lose secondary (right) click. You will be prompted when you run makepkg as to whether or not to use this.
+
+## Building
+
+To build this package, simply run:
+
+	makepkg
+
+You will need to have imported gpg keys for the Linux kernel maintainers:
+
+For Linus Torvalds (the major release key):
+
+gpg --recv-keys 79BE3E4300411886
+
+For Greg Kroah-Hartman's key (the stable patch release key):
+
+gpg --recv-keys 38DBBDC86092693E 
