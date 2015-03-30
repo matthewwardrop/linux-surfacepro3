@@ -72,11 +72,9 @@ prepare() {
     remove support for secondary (or right) click. Do you want to enable the multitouch path? (y/N) "
   read response
   if [[ $response != 'y' && $response != 'Y' ]]; then
-    exit
+    patch -p1 -i "${srcdir}/multitouch.patch"
   fi
   
-  patch -p1 -i "${srcdir}/multitouch.patch"
-
   if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
   else
