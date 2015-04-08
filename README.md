@@ -7,23 +7,27 @@ This AUR package adds the following patches to the official Linux kernel package
  - Battery patch from https://github.com/nuclearsandwich/surface3-archlinux/issues/16 (patch from `colorprint`)
  - Camera patch from https://github.com/nuclearsandwich/surface3-archlinux/issues/12 (patch from `colorprint`)
  - Buttons and Wakeup patches from http://bugzilla.kernel.org/show_bug.cgi?id=84651 (patches from Chen Yu, comments #56 and #57)
- - Multitouch patches* (backported from the 4.0 patch) from https://gist.github.com/felipeota/afb5f510f5b315f8bed8
+ - Multitouch patches* (backported from the 4.0 patch) from https://gist.github.com/felipeota/afb5f510f5b315f8bed8 . 
+   (an X11 configuration file is also placed in `/etc/X11/xorg.conf.d/` in order to enable right click).
 
-
-* The multitouch patches add two-finger scroll support, but you lose secondary (right) click. You will be prompted when you run makepkg as to whether or not to use this.
+\* The multitouch patches add two-finger scrolling support. I'm not sure how
+   these patches affect touchpad support under Wayland (with Mesa 10.5, Weston will not start on the Surface Pro 3). 
+   If you want to disable this patch, change line 48 of PKGBUILD to: `multitouch='n'`. If disabled, the Xorg
+   configuration will not be copied to `/etc/X11/xorg.conf.d/` .
 
 ## Building
-
-To build this package, simply run:
-
-	makepkg
 
 You will need to have imported gpg keys for the Linux kernel maintainers:
 
 For Linus Torvalds (the major release key):
 
-gpg --recv-keys 79BE3E4300411886
+	gpg --recv-keys 79BE3E4300411886
 
 For Greg Kroah-Hartman's key (the stable patch release key):
 
-gpg --recv-keys 38DBBDC86092693E 
+	gpg --recv-keys 38DBBDC86092693E 
+
+Then, to build the package, simply run (as usual):
+
+	makepkg
+

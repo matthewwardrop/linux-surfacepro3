@@ -4,7 +4,7 @@
 pkgbase=linux-surfacepro3
 _srcname=linux-3.19
 pkgver=3.19.3
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 url="https://github.com/matthewwardrop/linux-surfacepro3"
 license=('GPL2')
@@ -24,6 +24,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'buttons.patch'
         'wakeup.patch'
         'multitouch.patch'
+        'surface3-touchpad.conf'
         )
 sha256sums=('be42511fe5321012bb4a2009167ce56a9e5fe362b4af43e8c371b3666859806c'
             'SKIP'
@@ -38,11 +39,13 @@ sha256sums=('be42511fe5321012bb4a2009167ce56a9e5fe362b4af43e8c371b3666859806c'
             'e149dda8c92feca0fc9bbcbca0d0c3b749246b441ab9f7d34a0f68aeae76504c'
             'ec4bbf44dc1e226ccfdc33884e4a38b2209af0a576a8edcae9226b9ecb8fa27f'
             '6483b294f2d35a3697d5747ecb30cc7b9605abe47cb4d4a33a086efbc10f65ad'
+            'a4f8197e5efd61c04a531cfc7ffc5fc2c000299bdd93480745a992eec16d0580'
             )
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
              )
+multitouch='y'
 
 _kernelname=${pkgbase#linux}
 
@@ -67,11 +70,8 @@ prepare() {
   patch -p1 -i "${srcdir}/buttons.patch"
 
   patch -p1 -i "${srcdir}/wakeup.patch"
-  
-  echo "WARNING: Enabling the multitouch patch will give you two finger scroll, but will \
-    remove support for secondary (or right) click. Do you want to enable the multitouch path? (y/N) "
-  read response
-  if [[ $response = 'y' && $response = 'Y' ]]; then
+
+  if [[ $multitouch = 'y' ]]; then
     patch -p1 -i "${srcdir}/multitouch.patch"
   fi
   
@@ -172,7 +172,12 @@ _package() {
   mv "${pkgdir}/lib" "${pkgdir}/usr/"
 
   # add vmlinux
-  install -D -m644 vmlinux "${pkgdir}/usr/lib/modules/${_kernver}/build/vmlinux" 
+  install -D -m644 vmlinux "${pkgdir}/usr/lib/modules/${_kernver}/build/vmlinux"
+  
+  # add xorg touchpad configuration
+  if [[ $multitouch = 'y' ]]; then
+    install -D -m644 "${srcdir}/surface3-touchpad.conf" "${pkgdir}/etc/X11/xorg.conf.d/"
+  fi
 }
 
 _package-headers() {
